@@ -8,6 +8,31 @@ import BuilderView from './components/BuilderView'
 import HomeView from './components/HomeView'
 import InterviewPrepView from './components/InterviewPrepView'
 
+const viewToPath = {
+  home: '/',
+  auth: '/auth',
+  dashboard: '/dashboard',
+  scanner: '/scanner',
+  builder: '/builder',
+  prep: '/prep',
+  history: '/history',
+  settings: '/settings'
+}
+
+const pathToView = {
+  '/': 'home',
+  '/auth': 'auth',
+  '/dashboard': 'dashboard',
+  '/scanner': 'scanner',
+  '/builder': 'builder',
+  '/prep': 'prep',
+  '/interview-prep': 'prep',
+  '/history': 'history',
+  '/settings': 'settings'
+}
+
+const getViewFromPath = () => pathToView[window.location.pathname] || null
+
 export const Icons = {
   Home: () => (
     <svg className="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -90,6 +115,10 @@ export const Icons = {
 function App() {
   const [activeView, setActiveView] = useState(() => {
     const saved = localStorage.getItem('resume_analyzer_user')
+    const pathView = getViewFromPath()
+    if (pathView) {
+      return pathView === 'home' && saved ? 'dashboard' : pathView
+    }
     return saved ? 'dashboard' : 'home'
   })
   const [selectedScan, setSelectedScan] = useState(null)
@@ -111,16 +140,34 @@ function App() {
     localStorage.setItem('resume_analyzer_api_url', apiUrl)
   }, [apiUrl])
 
+  useEffect(() => {
+    const handlePopState = () => {
+      const pathView = getViewFromPath()
+      if (pathView) {
+        setActiveView(pathView)
+        setSelectedScan(null)
+        setSidebarOpen(false)
+      }
+    }
+
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [])
+
   const navigate = (view, extra = {}) => {
     setActiveView(view)
     if (extra.clearScan) setSelectedScan(null)
     setSidebarOpen(false) // close sidebar on mobile nav click
+    const nextPath = viewToPath[view] || '/'
+    if (window.location.pathname !== nextPath) {
+      window.history.pushState({}, '', nextPath)
+    }
   }
 
   const handleLoginSuccess = (userData) => {
     localStorage.setItem('resume_analyzer_user', JSON.stringify(userData))
     setCurrentUser(userData)
-    setActiveView('dashboard')
+    navigate('dashboard', { clearScan: true })
   }
 
   const handleLogout = () => {
@@ -128,13 +175,13 @@ function App() {
       localStorage.removeItem('resume_analyzer_user')
       setCurrentUser(null)
       setSelectedScan(null)
-      setActiveView('home')
+      navigate('home', { clearScan: true })
     }
   }
 
   const viewScanResult = (scan) => {
     setSelectedScan(scan)
-    setActiveView('scanner')
+    navigate('scanner')
   }
 
   // Intercept view rendering if not authenticated
@@ -142,9 +189,9 @@ function App() {
     if (activeView === 'home') {
       return (
         <HomeView 
-          onGetStarted={() => setActiveView('auth')} 
+          onGetStarted={() => navigate('auth')} 
           isLoggedIn={false} 
-          onGoToDashboard={() => setActiveView('dashboard')} 
+          onGoToDashboard={() => navigate('dashboard')} 
         />
       )
     }
@@ -329,7 +376,7 @@ function App() {
               apiUrl={apiUrl} 
               currentUser={currentUser}
               onViewScan={viewScanResult} 
-              onNavigateToScan={() => setActiveView('scanner')}
+              onNavigateToScan={() => navigate('scanner')}
             />
           )}
           

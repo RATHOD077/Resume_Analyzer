@@ -173,7 +173,7 @@ function ScannerView({ apiUrl, currentUser, initialScan, clearInitialScan }) {
         <div className="glass-panel scan-loading-container">
           <div className="pulse-spinner"></div>
           <h2 style={{ fontFamily: 'var(--font-heading)' }}>Running ATS Analysis</h2>
-          <p style={{ color: 'var(--primary)', fontWeight: '600', minHeight: '24px', transition: 'all 0.5s ease' }}>
+          <p style={{ color: 'var(--primary)', fontWeight: '600', minHeight: '1.5rem', transition: 'all 0.5s ease' }}>
             {loadingMessages[loadingStep]}
           </p>
           <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
@@ -192,7 +192,7 @@ function ScannerView({ apiUrl, currentUser, initialScan, clearInitialScan }) {
           </div>
 
           {error && (
-            <div className="glass-panel" style={{ borderColor: 'rgba(239,68,68,0.2)', background: 'rgba(239,68,68,0.02)', marginBottom: '1.5rem', color: '#f87171' }}>
+            <div className="glass-panel error-panel">
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <span style={{ display: 'inline-flex', alignItems: 'center' }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -209,8 +209,8 @@ function ScannerView({ apiUrl, currentUser, initialScan, clearInitialScan }) {
           <form onSubmit={handleScan}>
             <div className="scanner-split">
               {/* Left side: Upload area */}
-              <div className="glass-panel" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                <h3 style={{ borderBottom: '1px solid var(--panel-border)', paddingBottom: '0.75rem' }}>
+              <div className="glass-panel scanner-upload-panel">
+                <h3 className="scanner-section-title">
                   Step 1: Upload Resume
                 </h3>
                 
@@ -240,7 +240,7 @@ function ScannerView({ apiUrl, currentUser, initialScan, clearInitialScan }) {
                       <p style={{ color: 'var(--text-primary)', fontWeight: '600' }}>File Selected</p>
                       <div className="file-info-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
                         <span style={{ display: 'inline-flex', alignItems: 'center' }}>
-                          <svg style={{ width: '14px', height: '14px' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <svg style={{ width: '0.875rem', height: '0.875rem' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
                             <polyline points="14 2 14 8 20 8" />
                           </svg>
@@ -269,7 +269,7 @@ function ScannerView({ apiUrl, currentUser, initialScan, clearInitialScan }) {
 
               {/* Right side: Job Description Input */}
               <div className="glass-panel text-input-container">
-                <h3 style={{ borderBottom: '1px solid var(--panel-border)', paddingBottom: '0.75rem' }}>
+                <h3 className="scanner-section-title">
                   Step 2: Job Description
                 </h3>
                 <textarea 
@@ -282,8 +282,8 @@ function ScannerView({ apiUrl, currentUser, initialScan, clearInitialScan }) {
               </div>
             </div>
 
-            <div style={{ textAlign: 'right' }}>
-              <button type="submit" className="btn btn-primary" style={{ padding: '1rem 3rem', fontSize: '1.05rem' }}>
+            <div className="scanner-actions">
+              <button type="submit" className="btn btn-primary scanner-submit-btn">
                 Analyze Resume <Icons.ArrowRight />
               </button>
             </div>
@@ -312,8 +312,8 @@ function ScannerView({ apiUrl, currentUser, initialScan, clearInitialScan }) {
           <div className="report-grid">
             {/* Left side: Score circular gauge */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-              <div className="glass-panel gauge-wrapper" style={{ padding: '2.5rem 1.5rem' }}>
-                <svg className="gauge-svg">
+              <div className="glass-panel gauge-wrapper scanner-gauge-panel">
+                <svg className="gauge-svg" viewBox="0 0 180 180">
                   <circle cx="90" cy="90" r="70" className="gauge-bg"></circle>
                   <circle 
                     cx="90" 
@@ -348,7 +348,7 @@ function ScannerView({ apiUrl, currentUser, initialScan, clearInitialScan }) {
               </div>
 
               {/* Struct/Formatting Quick Checks */}
-              <div className="glass-panel" style={{ padding: '1.5rem' }}>
+              <div className="glass-panel scanner-checks-panel">
                 <h4 style={{ marginBottom: '1rem', fontSize: '0.95rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)' }}>
                   Structural Checks
                 </h4>
@@ -356,21 +356,21 @@ function ScannerView({ apiUrl, currentUser, initialScan, clearInitialScan }) {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.9rem' }}>
                     <span>Email Info</span>
                     <span style={{ color: '#10b981', fontWeight: '600', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-                      <svg style={{ width: '14px', height: '14px' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                      <svg style={{ width: '0.875rem', height: '0.875rem' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
                       Verified
                     </span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.9rem' }}>
                     <span>Phone Details</span>
                     <span style={{ color: '#10b981', fontWeight: '600', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-                      <svg style={{ width: '14px', height: '14px' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                      <svg style={{ width: '0.875rem', height: '0.875rem' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
                       Verified
                     </span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.9rem' }}>
                     <span>Social/GitHub Links</span>
                     <span style={{ color: '#10b981', fontWeight: '600', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-                      <svg style={{ width: '14px', height: '14px' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                      <svg style={{ width: '0.875rem', height: '0.875rem' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
                       Verified
                     </span>
                   </div>
@@ -422,7 +422,7 @@ function ScannerView({ apiUrl, currentUser, initialScan, clearInitialScan }) {
                   </h4>
                   {parseSafe(result.missingKeywords).length === 0 ? (
                     <p style={{ fontSize: '0.85rem', color: '#10b981', fontWeight: '600', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-                      <svg style={{ width: '14px', height: '14px' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                      <svg style={{ width: '0.875rem', height: '0.875rem' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
                       Perfect skill coverage! No missing keywords identified.
                     </p>
                   ) : (
@@ -473,16 +473,7 @@ function ScannerView({ apiUrl, currentUser, initialScan, clearInitialScan }) {
 
                 <div className="suggestion-list">
                   {parseSafe(result.suggestions).fallbackActive && (
-                    <div style={{
-                      background: 'rgba(217, 119, 6, 0.15)',
-                      borderLeft: '4px solid #d97706',
-                      color: '#fbbf24',
-                      padding: '0.75rem 1rem',
-                      borderRadius: '4px',
-                      fontSize: '0.85rem',
-                      marginBottom: '1.25rem',
-                      lineHeight: '1.4'
-                    }}>
+                    <div className="scanner-notice-banner">
                       <strong>Notice:</strong> Your Gemini API free-tier request quota is currently exhausted. Standard rule-based parsing has been applied.
                     </div>
                   )}

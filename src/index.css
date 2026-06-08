@@ -12,6 +12,7 @@
   --primary-dark: #4f46e5;
   --primary-light: #e0e7ff;
   --primary-xlight: #f5f3ff;
+  --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Sidebar */
   --sidebar-width: 16rem;
@@ -693,6 +694,49 @@ a { text-decoration: none; color: inherit; }
   margin-bottom: 1rem;
 }
 
+.scanner-upload-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.scanner-section-title {
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 0.75rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.scanner-actions {
+  text-align: right;
+  margin-top: 1.5rem;
+}
+
+.scanner-submit-btn {
+  padding: 1rem 3rem;
+  font-size: 1.05rem;
+}
+
+.scanner-gauge-panel {
+  padding: 2.5rem 1.5rem;
+}
+
+.scanner-checks-panel {
+  padding: 1.5rem;
+}
+
+.scanner-notice-banner {
+  background: rgba(217, 119, 6, 0.15);
+  border-left: 0.25rem solid #d97706;
+  color: #fbbf24;
+  padding: 0.75rem 1rem;
+  border-radius: 0.25rem;
+  font-size: 0.85rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.4;
+}
+
 .file-upload-box {
   border: 0.125rem dashed #d1d5db;
   border-radius: var(--radius-lg);
@@ -1134,6 +1178,29 @@ a { text-decoration: none; color: inherit; }
 
   /* Scanner split becomes single column */
   .scanner-split { grid-template-columns: 1fr; }
+
+  .scanner-actions {
+    text-align: center;
+  }
+
+  .scanner-submit-btn {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .scanner-gauge-panel {
+    padding: 1.5rem 1rem;
+  }
+
+  .scanner-checks-panel {
+    padding: 1.25rem 1rem;
+  }
+
+  .gauge-svg {
+    width: 8rem;
+    height: 8rem;
+  }
 
   /* Auth split panel */
   .auth-split-container { grid-template-columns: 1fr; }
