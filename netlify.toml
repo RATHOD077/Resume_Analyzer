@@ -1,6 +1,3 @@
 [build]
-  command = "npm install --prefix . && npm run build"
+  command = "npm install --include=dev && npm run build"
   publish = "dist"
-
-[context.production.environment]
-  NODE_ENV = "production"
